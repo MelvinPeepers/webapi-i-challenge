@@ -9,6 +9,9 @@ const db = require("./data/db.js");
 // global objects
 const server = express();
 
+// middleware
+server.use(express.json());
+
 // What happens on a GET request to /
 // request handler
 // req (request) is what is coming to us, res (response) is what we're sending out
@@ -53,6 +56,7 @@ server.post("/api/users", (req, res) => {
       });
     });
 });
+// tested the above POST in POSTMAN
 
 // DELETE user
 

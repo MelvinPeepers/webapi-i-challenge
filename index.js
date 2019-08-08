@@ -35,6 +35,26 @@ server.get("/api/users", (req, res) => {
 // tested the above GET and it works
 
 // GET user ID
+server.get("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  db.findById(id)
+    .then(user => {
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).json({
+          message: "The user with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: "The user information could not be retrieved."
+      });
+    });
+});
+// Tested the above with POSTMAN and it works
 
 // POST user
 server.post("/api/users", (req, res) => {

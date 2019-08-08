@@ -101,6 +101,32 @@ server.delete("/api/users/:id", (req, res) => {
 // tested the above POST in POSTMAN
 
 // PUT user
+server.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+  const { name, bio } = req.body;
+
+  db.update(id, changes)
+    .then(updated => {
+      if (!updated) {
+        res.status(404).json({
+          message: "The user with the specified ID does not exist."
+        });
+      } else if (!name || !bio) {
+        res.status(400).json({
+          errorMessage: "Please provide name and bio for the user."
+        });
+      } else {
+        res.json(updated);
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: "The user information could not be modified."
+      });
+    });
+});
+// tested with Postman seems to be working correctly
 
 // should be last step
 server.listen(4444, () => {
